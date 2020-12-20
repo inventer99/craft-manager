@@ -1,0 +1,25 @@
+plugins {
+    id 'scala'
+    id 'application'
+}
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    // Scala
+    implementation 'org.scala-lang:scala-library:2.13.3'
+
+    // Akka
+    implementation 'com.typesafe.akka:akka-actor-typed_2.13:2.6.6'
+    implementation 'com.typesafe.akka:akka-remote_2.13:2.6.6'
+
+    // AckCord (Akka Discrod)
+    implementation 'net.katsstuff:ackcord_2.13:0.17.1'
+
+    // Logging
+    implementation 'org.slf4j:slf4j-simple:2.0.0-alpha1'
+}
+
+mainClassName = 'com.inventertech.craftmanager.command.Main'

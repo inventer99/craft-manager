@@ -1,0 +1,4 @@
+rootProject.name = 'craft-manager'
+
+include 'command'
+include 'server'
