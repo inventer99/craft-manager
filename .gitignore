@@ -1,9 +1,7 @@
 # IDE
 .idea/
 
-# Gradle
-.gradle/
-gradle/
-
 # Build
+.bsp/
+target/
 build/

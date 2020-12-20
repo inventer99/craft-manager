@@ -1,5 +1,0 @@
-rootProject.name = 'craft-manager'
-
-include 'shared'
-include 'command'
-include 'server'
