@@ -3,8 +3,6 @@ package com.inventertech.craftmanager.command
 import ackcord.{APIMessage, ClientSettings}
 import org.slf4j.LoggerFactory
 
-//import akka.actor.typed.ActorSystem
-
 object Main {
   private val log = LoggerFactory.getLogger(Main.getClass)
 

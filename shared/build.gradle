@@ -1,13 +1,9 @@
 plugins {
     id 'scala'
-    id 'application'
 }
 
 repositories {
     jcenter()
-    maven {
-        url "https://jitpack.io"
-    }
 }
 
 dependencies {
@@ -18,13 +14,6 @@ dependencies {
     implementation 'com.typesafe.akka:akka-actor-typed_2.13:2.6.6'
     implementation 'com.typesafe.akka:akka-remote_2.13:2.6.6'
 
-    // Minecraft RCON
-    implementation 'com.github.MrGraversen:minecraft-rcon:0.0.3'
-
     // Logging
     implementation 'org.slf4j:slf4j-simple:2.0.0-alpha1'
-
-    implementation project(':shared')
 }
-
-mainClassName = 'com.inventertech.craftmanager.server.Main'

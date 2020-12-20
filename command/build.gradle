@@ -20,6 +20,8 @@ dependencies {
 
     // Logging
     implementation 'org.slf4j:slf4j-simple:2.0.0-alpha1'
+
+    implementation project(':shared')
 }
 
 mainClassName = 'com.inventertech.craftmanager.command.Main'
