@@ -1,4 +1,4 @@
-package com.inventertech.craftmanager.command
+package craftmanager.command
 
 import ackcord.Requests
 import ackcord.commands.{CommandController, NamedCommand}

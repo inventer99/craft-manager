@@ -24,7 +24,7 @@ lazy val command = (project in file("command"))
     commonSettings,
     name := "command",
     libraryDependencies ++= ackcordDeps,
-    mainClass := Some("com.inventertech.craftmanager.command.Main")
+    mainClass := Some("craftmanager.command.Main")
   )
   .dependsOn(shared)
 
@@ -32,13 +32,22 @@ lazy val server = (project in file("server"))
   .settings(
     commonSettings,
     name := "server",
-    mainClass := Some("com.inventertech.craftmanager.server.Main")
+    mainClass := Some("craftmanager.server.Main")
   )
   .dependsOn(shared)
+
+lazy val minecraft = (project in file("minecraft"))
+  .settings(
+    commonSettings,
+    name := "minecraft",
+    libraryDependencies ++= minecraftDeps
+  )
+  .dependsOn(shared, server)
 
 lazy val root = (project in file("."))
   .aggregate(
     shared,
     command,
-    server
+    server,
+    minecraft
   )

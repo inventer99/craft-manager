@@ -1,4 +1,4 @@
-package com.inventertech.craftmanager
+package craftmanager
 
 package object command {
   val craftManagerSymbols = Seq("cm!")

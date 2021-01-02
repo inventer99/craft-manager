@@ -1,4 +1,4 @@
-package com.inventertech.craftmanager.command
+package craftmanager.command
 
 import ackcord.Requests
 import ackcord.commands.{CommandController, NamedCommand}
@@ -7,7 +7,6 @@ import akka.NotUsed
 import akka.actor.typed.scaladsl.AskPattern._
 import akka.actor.typed.{ActorRef, ActorSystem}
 import akka.util.Timeout
-import com.inventertech.craftmanager.shared.ServerProcess
 
 class ProcessCommands(requests: Requests)(implicit timeout: Timeout, system: ActorSystem[Nothing]) extends CommandController(requests) {
   val start: NamedCommand[NotUsed] = Command

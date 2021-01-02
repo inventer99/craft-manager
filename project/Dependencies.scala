@@ -16,6 +16,8 @@ object Dependencies {
   val akkaSlf4j = "com.typesafe.akka" %% "akka-slf4j" % akkaVersion
   val slf4jSimple = "org.slf4j" % "slf4j-simple" % "2.0.0-alpha1"
 
+  val rcon = "com.github.MrGraversen" % "minecraft-rcon" % "0.0.3"
+
   val akkaDeps = Seq(
     akkaActor,
     akkaStream,
@@ -32,6 +34,10 @@ object Dependencies {
   val loggingDeps = Seq(
     akkaSlf4j,
     slf4jSimple
+  )
+
+  val minecraftDeps = Seq(
+    rcon
   )
 
   val commonDeps = akkaDeps ++ loggingDeps

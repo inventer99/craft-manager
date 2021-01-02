@@ -1,4 +1,4 @@
-package com.inventertech.craftmanager.command
+package craftmanager.command
 
 import ackcord._
 import ackcord.cachehandlers.CacheTypeRegistry
@@ -12,15 +12,12 @@ import akka.util.Timeout
 import com.typesafe.config.ConfigFactory
 import org.slf4j.LoggerFactory
 
+import scala.concurrent.Await
 import scala.concurrent.duration.DurationInt
-import scala.concurrent.{Await, ExecutionContext}
 import scala.util.control.NonFatal
 
 object Main {
   private val log = LoggerFactory.getLogger(Main.getClass)
-
-  implicit val system: ActorSystem[Nothing] = ActorSystem(Behaviors.ignore, "CraftManager")
-  implicit val executionContext: ExecutionContext = system.executionContext
 
   def main(args: Array[String]): Unit = {
     val token = sys.env.get("DISCORD_TOKEN") match {
