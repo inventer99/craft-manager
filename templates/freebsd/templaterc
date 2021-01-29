@@ -1,0 +1,74 @@
+#!/bin/sh
+#
+# PROVIDE: templatename
+# REQUIRE: LOGIN DAEMON NETWORKING mountcritlocal
+# KEYWORD: shutdown
+#
+# Add the following lines to /etc/rc.config.local to enable the templatename service:
+# 
+# templatename_enable="YES"
+# templatename_user="<run server as this user>"
+# templatename_script="<path to templatename start script>"
+# templatename_path="<path to templatename directory>"
+
+. /etc/rc.subr
+
+name="templatename"
+rcvar="templatename_enable"
+
+start_cmd="${name}_start"
+stop_cmd="${name}_stop"
+restart_cmd="${name}_restart"
+status_cmd="${name}_status"
+
+: ${templatename_enable="NO"}
+: ${templatename_session="templatesession"}
+: ${templatename_user="templateuser"}
+: ${templatename_script=""}
+: ${templatename_path=""}
+
+command="echo Invalid rc file!"
+
+templatename_start() {
+  if is_running; then
+    echo "${name} already running?"
+  else
+    echo "Starting ${name}."
+    tmux new-session -d -s "${templatename_session}" -c "${templatename_path}" '/bin/sh LaunchServer.sh'
+  fi
+}
+
+templatename_stop() {
+  if is_running; then
+    echo "Stopping ${name}."
+    tmux send-keys -t "${templatename_session}" "stop" Enter
+  else
+    echo "${name} already running"
+  fi
+}
+
+templatename_restart() {
+  templatename_stop
+  templatename_start
+}
+
+templatename_status() {
+  if is_running; then
+    echo "${name} is running as unknown."
+  else
+    echo "${name} is not running."
+  fi
+}
+
+is_running() {
+  tmux has-session -t "${templatename_session}"
+  return
+}
+
+as_user() {
+  su -m ${templatename_user} -c "$1"
+}
+
+load_rc_config ${name}
+run_rc_command "$1"
+

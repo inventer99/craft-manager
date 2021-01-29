@@ -1,0 +1,74 @@
+#!/bin/sh
+#
+# PROVIDE: minecraft
+# REQUIRE: LOGIN DAEMON NETWORKING mountcritlocal
+# KEYWORD: shutdown
+#
+# Add the following lines to /etc/rc.config.local to enable the minecraft service:
+# 
+# minecraft_enable="YES"
+# minecraft_user="<run server as this user>"
+# minecraft_script="<path to minecraft start script>"
+# minecraft_path="<path to minecraft directory>"
+
+. /etc/rc.subr
+
+name="minecraft"
+rcvar="minecraft_enable"
+
+start_cmd="${name}_start"
+stop_cmd="${name}_stop"
+restart_cmd="${name}_restart"
+status_cmd="${name}_status"
+
+: ${minecraft_enable="NO"}
+: ${minecraft_session="minecraft"}
+: ${minecraft_user="minecraft"}
+: ${minecraft_script=""}
+: ${minecraft_path=""}
+
+command="echo Invalid rc file!"
+
+minecraft_start() {
+  if is_running; then
+    echo "${name} already running?"
+  else
+    echo "Starting ${name}."
+    tmux new-session -d -s "${minecraft_session}" -c "${minecraft_path}" "${minecraft_script}"
+  fi
+}
+
+minecraft_stop() {
+  if is_running; then
+    echo "Stopping ${name}."
+    tmux send-keys -t "${minecraft_session}" "stop" Enter
+  else
+    echo "${name} already running"
+  fi
+}
+
+minecraft_restart() {
+  minecraft_stop
+  minecraft_start
+}
+
+minecraft_status() {
+  if is_running; then
+    echo "${name} is running as unknown."
+  else
+    echo "${name} is not running."
+  fi
+}
+
+is_running() {
+  tmux has-session -t "${minecraft_session}"
+  return
+}
+
+as_user() {
+  su -m ${minecraft_user} -c "$1"
+}
+
+load_rc_config ${name}
+run_rc_command "$1"
+

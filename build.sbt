@@ -44,7 +44,7 @@ lazy val minecraft = (project in file("minecraft"))
   )
   .dependsOn(shared, server)
 
-lazy val root = (project in file("."))
+lazy val craftManager = (project in file("."))
   .aggregate(
     shared,
     command,

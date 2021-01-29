@@ -1,7 +1,7 @@
 package craftmanager.command
 
 import ackcord.Requests
-import ackcord.commands.{CommandController, NamedCommand}
+import ackcord.commands.{CommandController, NamedCommand, NamedDescribedCommand}
 import ackcord.syntax.TextChannelSyntax
 import akka.NotUsed
 import akka.actor.typed.scaladsl.AskPattern._
@@ -9,8 +9,11 @@ import akka.actor.typed.{ActorRef, ActorSystem}
 import akka.util.Timeout
 
 class ProcessCommands(requests: Requests)(implicit timeout: Timeout, system: ActorSystem[Nothing]) extends CommandController(requests) {
-  val start: NamedCommand[NotUsed] = Command
+  lazy val commands = Seq(start, stop, status)
+
+  val start: NamedDescribedCommand[NotUsed] = Command
     .named(craftManagerSymbols, Seq("start"))
+    .described("Start", "Starts the named server")
     .withRequest(_.textChannel.sendMessage("Not Implemented"))
 //    .withSideEffects { m =>
 //      val serverProcess
@@ -24,11 +27,13 @@ class ProcessCommands(requests: Requests)(implicit timeout: Timeout, system: Act
 //      }
 //    }
 
-  val stop: NamedCommand[NotUsed] = Command
+  val stop: NamedDescribedCommand[NotUsed] = Command
     .named(craftManagerSymbols, Seq("stop"))
+    .described("Stop", "Stops the named server")
     .withRequest(_.textChannel.sendMessage("Not Implemented"))
 
-  val status: NamedCommand[NotUsed] = Command
+  val status: NamedDescribedCommand[NotUsed] = Command
     .named(craftManagerSymbols, Seq("status"))
+    .described("Status", "Displays the status of the named server")
     .withRequest(_.textChannel.sendMessage("Not Implemented"))
 }
