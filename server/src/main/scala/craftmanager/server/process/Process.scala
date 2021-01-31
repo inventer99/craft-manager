@@ -1,25 +1,23 @@
-package craftmanager.server
+package craftmanager.server.process
 
 import akka.actor.typed.Behavior
-import akka.actor.typed.receptionist.{Receptionist, ServiceKey}
 import akka.actor.typed.scaladsl.Behaviors
-import craftmanager.shared.Stopped
+import com.typesafe.config.Config
 
 import scala.concurrent.ExecutionContext
 import scala.util.{Failure, Success}
 
 object Process {
-  import craftmanager.shared.ProcessProtocol._
+  import craftmanager.shared.process.ProcessProtocol._
 
-  val ProcessServiceKey: ServiceKey[Command] = ServiceKey("Process")
-
-  def apply(): Behavior[Command] =
+  def apply(config: Config): Behavior[Command] =
     Behaviors.setup { context =>
-      context.system.receptionist ! Receptionist.register(ProcessServiceKey, context.self)
-//      processHandler()
+      import context.executionContext
+      processHandler(new ProcessService(config))
     }
 
-  private def processHandler(processService: ProcessService)(implicit ec: ExecutionContext): Behavior[Command] =
+  private def processHandler(processService: ProcessService)(
+      implicit ec: ExecutionContext): Behavior[Command] =
     Behaviors.receiveMessage[Command] {
       case StartProcess(replyTo) =>
         processService.start().onComplete {
@@ -47,8 +45,8 @@ object Process {
         Behaviors.same
       case InquireProcessStatus(replyTo) =>
         processService.status().onComplete {
-          case Success(_) =>
-            replyTo ! InquireProcessStatusSucceeded(Stopped)
+          case Success(status) =>
+            replyTo ! InquireProcessStatusSucceeded(status)
           case Failure(error) =>
             replyTo ! InquireProcessStatusFailed(error.getMessage)
         }

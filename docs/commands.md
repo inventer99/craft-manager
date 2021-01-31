@@ -44,4 +44,4 @@ Usage: `cm! <name> restart`
 
 #### Status
 Get a server's status  
-Usage: `cm! <name> ***status`***
+Usage: `cm! <name> status`

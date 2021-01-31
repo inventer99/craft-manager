@@ -1,4 +1,4 @@
-package craftmanager.shared
+package craftmanager.shared.process
 
 sealed trait ProcessStatus
 case object Unknown extends ProcessStatus // Unable to determine server status

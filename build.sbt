@@ -10,7 +10,8 @@ lazy val commonSettings = Seq(
     Resolver.JCenterRepository,
     "jitpack.io" at "https://jitpack.io"
   ),
-  libraryDependencies ++= commonDeps
+  libraryDependencies ++= commonDeps,
+  excludeDependencies ++= excludedDeps
 )
 
 lazy val shared = (project in file("shared"))
